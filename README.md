@@ -15,15 +15,15 @@ cycle it could happen that before pushing one could need to fetch and merge agai
 ### Working on the VM
 
 * `git fetch upstream`
-* `git merge upstream master`
+* `git merge upstream/master`
 * work on the project
 * `git add . `
 * `git commit -m "commit label"
-* `git push upsteam master`
+* `git push upsteam/master`
 * if push doesn't work then additional steps are needed:
   - `git fetch upstream`
-  - `git merge upstream master`
-  - `git push upsteam master`
+  - `git merge upstream/master`
+  - `git push upsteam/master`
 
 
 
