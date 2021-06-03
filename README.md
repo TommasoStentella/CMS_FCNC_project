@@ -10,7 +10,7 @@ interesting files to be committed. To be sure the command `git status` can be ru
 use `git add <filename>` instead of `git add --all`. The most updated version is always the one on this repo, so to work effectively on the VM one should always fetch
 for updates, merge, work, add the changed files, commit and push again to this repo. Moreover, in order to have a proper merge one should always commit the local
 changes before. Also, before pushing one should always commit, merge with the remote one wants to push to, and then push. In the previous example of development
-cycle it could happen that before pushing one could need to fetch and merge again (this happen if someone update this repo in during the work-time on the VM).
+cycle it could happen that before pushing one could need to fetch and merge again (this happen if someone update this repo during the work-time on the VM).
 
 ### Working on the VM
 
@@ -19,11 +19,11 @@ cycle it could happen that before pushing one could need to fetch and merge agai
 * work on the project
 * `git add --all`
 * `git commit -m "commit label"
-* `git push upsteam/master`
+* `git push upstream`
 * if push doesn't work then additional steps are needed:
   - `git fetch upstream`
   - `git merge upstream/master`
-  - `git push upsteam/master`
+  - `git push upstream`
 
 
 
