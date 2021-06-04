@@ -80,7 +80,7 @@ ROOT.gInterpreter.Declare(compute_m_code)
 InvMass2_code = '''
 using namespace ROOT::VecOps;
 
-auto InvMass2(const float &p1, const float &p2, const float &phi1, const float &phi2, const float &eta1, const float &eta2, const float &m1, const float &m2)
+auto InvMass2(const float &p1, const float &p2, const float &eta1, const float &eta2, const float &phi1, const float &phi2, const float &m1, const float &m2)
 {
     RVec<float> p = {p1, p2};
     RVec<float> eta = {eta1, eta2};
@@ -98,7 +98,7 @@ ROOT.gInterpreter.Declare(InvMass2_code)
 InvMass3_code = '''
 using namespace ROOT::VecOps;
 
-auto InvMass3(const RVec<float> &p, const RVec<float> &phi, const RVec<float> &eta, const RVec<float> &m)
+auto InvMass3(const RVec<float> &p, const RVec<float> &eta, const RVec<float> &phi, const RVec<float> &m)
 {
     return InvariantMass(p, eta, phi, m);
 };
@@ -131,5 +131,22 @@ ROOT.gInterpreter.Declare(dR_code)
 # '''
 
 # ROOT.gInterpreter.Declare(Zcandidate_code)
+
+##############################################################################################
+
+merge_code = '''
+using namespace ROOT::VecOps;
+
+auto Merge(const RVec<float> &mu, const RVec<float> &el)
+{ 
+    RVec<float> merged {-1,-1,-1};
+    merged[0] = mu[0];
+    merged[1] = mu[1];
+    merged[2] = el[0]; 
+    return merged;
+}
+'''
+
+ROOT.gInterpreter.Declare(merge_code)
 
 ##############################################################################################
