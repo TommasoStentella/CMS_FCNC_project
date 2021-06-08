@@ -3,6 +3,8 @@ import ROOT.ROOT as rr
 
 import cpp
 
+dirOutPath = '/data/Skim/'
+
 ##############################################################################################
 
 
@@ -42,7 +44,7 @@ def FSkim3(df):
             .Define('maskEl', 'Electron_pfRelIso03_all < 0.15')\
             .Define('nGoodEl', 'Sum(maskEl)')\
             .Filter('nGoodMu == 3 && nGoodEl == 0', 'GoodEvent')\
-            .Filter('Sum(Muon_charge) != -3 && Sum(Muon_charge) != 3', 'GoodCharge')\
+            .Filter('abs(Sum(Muon_charge[maskMu])) != 3', 'GoodCharge')\
             .Define('Muon_pt15', 'Muon_pt[maskMu]')
     
     return fdf
@@ -57,7 +59,9 @@ def FSkim4(df):
             .Define('maskEl', 'Electron_pfRelIso03_all < 0.15 && Electron_pt > 15')\
             .Define('nGoodEl', 'Sum(maskEl)')\
             .Define('Electron_pt15', 'Electron_pt[maskEl]')\
-            .Filter('nGoodMu == 2 && nGoodEl == 1', 'GoodEvent')
+            .Filter('nGoodMu == 2 && nGoodEl == 1', 'GoodEvent')\
+            .Define('ChargeMus', 'Muon_charge[maskMu][0] * Muon_charge[maskMu][1]')\
+            .Filter('ChargeMus < 0', 'GoodCharge')
             
     return fdf
 
@@ -70,18 +74,19 @@ FSkim ={1 : FSkim1, 2 : FSkim2, 3 : FSkim3, 4 : FSkim4}
 def DeclareVariables1(df, title, save=True):
     finalVariables1 = {'mu_pt0','mu_pt1','mu_eta0','mu_eta1','mu_phi0','mu_phi1','mu_mass0',
                        'mu_mass1','mu_q0','mu_q1','inv_m','MET_pt','MET_phi','eventWeightLumi'}
-
+    
     define =  FSkim1(df).Define('mu_pt0', 'Muon_pt[maskMu][0]')\
                         .Define('mu_pt1', 'Muon_pt[maskMu][1]')\
                         .Define('mu_eta0', 'Muon_eta[maskMu][0]')\
                         .Define('mu_eta1', 'Muon_eta[maskMu][1]')\
                         .Define('mu_phi0', 'Muon_phi[maskMu][0]')\
                         .Define('mu_phi1', 'Muon_phi[maskMu][1]')\
-                        .Define('mu_mass0', 'Muon_mass[maskMu][0]')\
-                        .Define('mu_mass1', 'Muon_mass[maskMu][1]')\
+                        .Define('mu_mass0', '0.1057')\
+                        .Define('mu_mass1', '0.1057')\
                         .Define('mu_q0', 'Muon_charge[maskMu][0]')\
                         .Define('mu_q1', 'Muon_charge[maskMu][1]')\
                         .Define('inv_m', 'InvMass2(mu_pt0, mu_pt1, mu_eta0, mu_eta1, mu_phi0, mu_phi1, mu_mass0, mu_mass1)')\
+                        .Filter('inv_m > 15', 'GoodMass')\
                         .Filter('abs(inv_m - 91.2) > 10 && mu_q0 * mu_q1 < 0', 'rmZ')
     if save:
         define.Snapshot('Events', dirOutPath + title + 'Flat1.root', finalVariables1)
@@ -100,11 +105,12 @@ def DeclareVariables2(df, title, save=True):
                         .Define('el_eta', 'Electron_eta[maskEl][0]')\
                         .Define('mu_phi', 'Muon_phi[maskMu][0]')\
                         .Define('el_phi', 'Electron_phi[maskEl][0]')\
-                        .Define('mu_mass', 'Muon_mass[maskMu][0]')\
-                        .Define('el_mass', 'Electron_mass[maskEl][0]')\
+                        .Define('mu_mass', '0.1057')\
+                        .Define('el_mass', '0.000511')\
                         .Define('mu_q', 'Muon_charge[maskMu][0]')\
                         .Define('el_q', 'Electron_charge[maskEl][0]')\
-                        .Define('inv_m', 'InvMass2(mu_pt, el_pt, mu_eta, el_eta, mu_phi, el_phi, mu_mass, el_mass)')
+                        .Define('inv_m', 'InvMass2(mu_pt, el_pt, mu_eta, el_eta, mu_phi, el_phi, mu_mass, el_mass)')\
+                        .Filter('inv_m > 15', 'GoodMass')
     if save:
         define.Snapshot('Events', dirOutPath + title + 'Flat2.root', finalVariables2)
     
@@ -118,7 +124,7 @@ def DeclareVariables3(df, title, save=True):
                        'mu_q0','mu_q1','mu_q2','inv_m01','inv_m12','inv_m02','inv_m3',
                        'dR01','dR02','MET_pt','MET_phi','eventWeightLumi'}
 
-    define =  FSkim3(df).Define('mu_idx', 'find_idx(Muon_charge, Muon_phi, Muon_eta)')\
+    define =  FSkim3(df).Define('mu_idx', 'find_idx(Muon_charge[maskMu], Muon_phi[maskMu], Muon_eta[maskMu])')\
                         .Define('mu_pt0', 'Muon_pt[maskMu][mu_idx[0]]')\
                         .Define('mu_pt1', 'Muon_pt[maskMu][mu_idx[1]]')\
                         .Define('mu_pt2', 'Muon_pt[maskMu][mu_idx[2]]')\
@@ -128,9 +134,9 @@ def DeclareVariables3(df, title, save=True):
                         .Define('mu_phi0', 'Muon_phi[maskMu][mu_idx[0]]')\
                         .Define('mu_phi1', 'Muon_phi[maskMu][mu_idx[1]]')\
                         .Define('mu_phi2', 'Muon_phi[maskMu][mu_idx[2]]')\
-                        .Define('mu_mass0', 'Muon_mass[maskMu][mu_idx[0]]')\
-                        .Define('mu_mass1', 'Muon_mass[maskMu][mu_idx[1]]')\
-                        .Define('mu_mass2', 'Muon_mass[maskMu][mu_idx[2]]')\
+                        .Define('mu_mass0', '0.1057')\
+                        .Define('mu_mass1', '0.1057')\
+                        .Define('mu_mass2', '0.1057')\
                         .Define('mu_q0', 'Muon_charge[maskMu][mu_idx[0]]')\
                         .Define('mu_q1', 'Muon_charge[maskMu][mu_idx[1]]')\
                         .Define('mu_q2', 'Muon_charge[maskMu][mu_idx[2]]')\
@@ -157,7 +163,7 @@ def DeclareVariables4(df, title, save=True):
     define =  FSkim4(df).Define('lep_pt', 'Merge(Muon_pt[maskMu], Electron_pt[maskEl])')\
                         .Define('lep_eta', 'Merge(Muon_eta[maskMu], Electron_eta[maskEl])')\
                         .Define('lep_phi', 'Merge(Muon_phi[maskMu], Electron_phi[maskEl])')\
-                        .Define('lep_mass', 'Merge(Muon_mass[maskMu], Electron_mass[maskEl])')\
+                        .Define('lep_mass', 'RVec<float> {0.1057, 0.1057, 0.000511}')\
                         .Define('lep_charge', 'Merge(Muon_charge[maskMu], Electron_charge[maskEl])')\
                         .Define('lep_idx', 'find_idx(lep_charge, lep_phi, lep_eta)')\
                         .Define('lep_pt0', 'lep_pt[lep_idx[0]]')\
