@@ -150,3 +150,52 @@ auto Merge(const RVec<float> &mu, const RVec<float> &el)
 ROOT.gInterpreter.Declare(merge_code)
 
 ##############################################################################################
+
+cleanJ_code = '''
+using namespace ROOT::VecOps;
+
+auto cleanJ(const RVec<float> &etaJ, const RVec<float> &etalep, const RVec<float> &phiJ, const RVec<float> &philep)
+{
+    RVec<int> mask(etaJ.size(), -1);
+    int drJL = 0;
+    
+    for(int i=0; i<etaJ.size(); i++){
+        for(int j=0; j<etalep.size(); j++){
+            if(DeltaR(etaJ[i], etalep[j], phiJ[i], philep[j]) > 0.4){
+                drJL++;
+            }
+        }
+        if(drJL == etalep.size()){
+            mask[i] = 1;
+        }
+        else{
+            mask[i] = 0;
+        }
+        drJL = 0;
+    }
+    
+    return mask;
+};
+'''
+
+ROOT.gInterpreter.Declare(cleanJ_code)
+
+##############################################################################################
+
+prod_code = '''
+using namespace ROOT::VecOps;
+
+auto prod(const RVec<int> &v1, const RVec<int> &v2)
+{
+    RVec<int> p(v1.size(), 0);
+    
+    for(int i=0; i<v1.size(); i++){
+        p[i] = v1[i]*v2[i];
+    }
+    
+    return p;
+};
+'''
+
+ROOT.gInterpreter.Declare(prod_code)
+

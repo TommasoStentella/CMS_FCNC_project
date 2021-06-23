@@ -11,48 +11,65 @@ dirOutPath = '/data/Skim/'
 # - iSkim1 ########################################################################
 def FSkim1(df):
     fdf = df.Filter('iSkim == 1', 'iSkim1')\
-            .Filter('nCleanJet >= 4 && nBJet > 0 && nBJet <= 2', 'GoodJet')\
             .Define('maskMu', 'Muon_pfRelIso03_all < 0.15 && Muon_pt > 7')\
             .Define('nGoodMu', 'Sum(maskMu)')\
             .Define('Muon_pt15', 'Muon_pt[maskMu]')\
             .Define('maskEl', 'Electron_pfRelIso03_all < 0.15')\
             .Define('nGoodEl', 'Sum(maskEl)')\
-            .Filter('nGoodMu == 2 && nGoodEl == 0', 'GoodEvent')
+            .Filter('nGoodMu == 2 && nGoodEl == 0', 'GoodEvent')\
+            .Define('maskJClean', 'cleanJ(Jet_eta, Muon_eta[maskMu], Jet_phi, Muon_phi[maskMu])')\
+            .Define('maskBjet', 'Jet_btagCSVV2 > 0.7')\
+            .Define('nJClean', 'Sum(maskJClean)')\
+            .Define('maskBJClean', 'prod(maskJClean,maskBjet)')\
+            .Define('nBJ', 'Sum(maskBJClean)')\
+            .Filter('nJClean >= 4 && nBJ > 0 && nBJ < 2', 'GoodJet')
+    
             
     return fdf
+#.Filter('nCleanJet >= 4 && nBJet > 0 && nBJet <= 2', 'GoodJet')\
 
 # - iSkim2 ########################################################################
 def FSkim2(df):
     fdf = df.Filter('iSkim == 2', 'iSkim2')\
-            .Filter('nCleanJet >= 4 && nBJet > 0 && nBJet <= 2', 'GoodJet')\
             .Define('maskMu', 'Muon_pfRelIso03_all < 0.15 && Muon_pt > 27')\
             .Define('nGoodMu', 'Sum(maskMu)')\
             .Define('Muon_pt15', 'Muon_pt[maskMu]')\
             .Define('maskEl', 'Electron_pfRelIso03_all < 0.15 && Electron_pt > 20')\
             .Define('nGoodEl', 'Sum(maskEl)')\
             .Define('Electron_pt15', 'Electron_pt[maskEl]')\
-            .Filter('nGoodMu == 1 && nGoodEl == 1', 'GoodEvent')
+            .Filter('nGoodMu == 1 && nGoodEl == 1', 'GoodEvent')\
+            .Define('maskJClean', 'cleanJ(Jet_eta, Merge(Muon_eta[maskMu], Electron_eta[maskEl]), Jet_phi,Merge(Muon_phi[maskMu], Electron_phi[maskEl]))')\
+            .Define('maskBjet', 'Jet_btagCSVV2 > 0.7')\
+            .Define('maskBJClean', 'prod(maskJClean,maskBjet)')\
+            .Define('nBJ', 'Sum(maskBJClean)')\
+            .Filter('nJClean >= 4 && nBJ > 0 && nBJ <= 2', 'GoodJet')
             
     return fdf
+#.Filter('nCleanJet >= 4 && nBJet > 0 && nBJet <= 2', 'GoodJet')\
 
 # - iSkim3 ########################################################################
 def FSkim3(df):
     fdf = df.Filter('iSkim == 3', 'iSkim3')\
-            .Filter('nCleanJet >= 2 && nBJet >= 1', 'GoodJet')\
             .Define('maskMu', 'Muon_pfRelIso03_all < 0.15 && Muon_pt > 15')\
             .Define('nGoodMu', 'Sum(maskMu)')\
             .Define('maskEl', 'Electron_pfRelIso03_all < 0.15')\
             .Define('nGoodEl', 'Sum(maskEl)')\
             .Filter('nGoodMu == 3 && nGoodEl == 0', 'GoodEvent')\
             .Filter('abs(Sum(Muon_charge[maskMu])) != 3', 'GoodCharge')\
-            .Define('Muon_pt15', 'Muon_pt[maskMu]')
+            .Define('Muon_pt15', 'Muon_pt[maskMu]')\
+            .Define('maskJClean', 'cleanJ(Jet_eta, Muon_eta[maskMu], Jet_phi, Muon_phi[maskMu])')\
+            .Define('maskBjet', 'Jet_btagCSVV2 > 0.7')\
+            .Define('nJClean', 'Sum(maskJClean)')\
+            .Define('maskBJClean', 'prod(maskJClean,maskBjet)')\
+            .Define('nBJ', 'Sum(maskBJClean)')\
+            .Filter('nJClean >= 2 && nBJ >= 1', 'GoodJet')
     
     return fdf
+#.Filter('nCleanJet >= 2 && nBJet >= 1', 'GoodJet')\
 
 # - iSkim4 ########################################################################
 def FSkim4(df):
     fdf = df.Filter('iSkim == 4', 'iSkim4')\
-            .Filter('nCleanJet >= 2 && nBJet >= 1', 'GoodJet')\
             .Define('maskMu', 'Muon_pfRelIso03_all < 0.15 && Muon_pt > 15')\
             .Define('nGoodMu', 'Sum(maskMu)')\
             .Define('Muon_pt15', 'Muon_pt[maskMu]')\
@@ -61,9 +78,15 @@ def FSkim4(df):
             .Define('Electron_pt15', 'Electron_pt[maskEl]')\
             .Filter('nGoodMu == 2 && nGoodEl == 1', 'GoodEvent')\
             .Define('ChargeMus', 'Muon_charge[maskMu][0] * Muon_charge[maskMu][1]')\
-            .Filter('ChargeMus < 0', 'GoodCharge')
+            .Filter('ChargeMus < 0', 'GoodCharge')\
+            .Define('maskJClean', 'cleanJ(Jet_eta, Merge(Muon_eta[maskMu], Electron_eta[maskEl]), Jet_phi,Merge(Muon_phi[maskMu], Electron_phi[maskEl]))')\
+            .Define('maskBjet', 'Jet_btagCSVV2 > 0.7')\
+            .Define('maskBJClean', 'prod(maskJClean,maskBjet)')\
+            .Define('nBJ', 'Sum(maskBJClean)')\
+            .Filter('nJClean >= 2 && nBJ >= 1', 'GoodJet')
             
     return fdf
+#.Filter('nCleanJet >= 2 && nBJet >= 1', 'GoodJet')\
 
 # - iSkim dictionary ##############################################################
 
@@ -73,7 +96,8 @@ FSkim ={1 : FSkim1, 2 : FSkim2, 3 : FSkim3, 4 : FSkim4}
 
 def DeclareVariables1(df, title, save=True):
     finalVariables1 = {'mu_pt0','mu_pt1','mu_eta0','mu_eta1','mu_phi0','mu_phi1','mu_mass0',
-                       'mu_mass1','mu_q0','mu_q1','inv_m','MET_pt','MET_phi','eventWeightLumi'}
+                       'mu_mass1','mu_q0','mu_q1','inv_m','MET_pt','MET_phi','eventWeightLumi',
+                      'nBJ', 'nBJet'}
     
     define =  FSkim1(df).Define('mu_pt0', 'Muon_pt[maskMu][0]')\
                         .Define('mu_pt1', 'Muon_pt[maskMu][1]')\
