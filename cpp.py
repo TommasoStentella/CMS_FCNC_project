@@ -121,6 +121,19 @@ ROOT.gInterpreter.Declare(dR_code)
 
 ##############################################################################################
 
+dPhi_code = '''
+using namespace ROOT::VecOps;
+
+auto dPhi(const float &phi1, const float &phi2)
+{
+    return DeltaPhi(phi1, phi2);
+};
+'''
+
+ROOT.gInterpreter.Declare(dPhi_code)
+
+##############################################################################################
+
 # Zcandidate_code = '''
 # using namespace ROOT::VecOps;
 
@@ -161,7 +174,7 @@ auto cleanJ(const RVec<float> &etaJ, const RVec<float> &etalep, const RVec<float
     
     for(int i=0; i<etaJ.size(); i++){
         for(int j=0; j<etalep.size(); j++){
-            if(DeltaR(etaJ[i], etalep[j], phiJ[i], philep[j]) > 0.4){
+            if(DeltaR(etaJ[i], etalep[j], phiJ[i], philep[j]) > 0.4 && abs(etaJ[i]) < 2.5){
                 drJL++;
             }
         }
@@ -198,4 +211,62 @@ auto prod(const RVec<int> &v1, const RVec<int> &v2)
 '''
 
 ROOT.gInterpreter.Declare(prod_code)
+
+##############################################################################################
+
+closest_Jet_code = '''
+using namespace ROOT::VecOps;
+
+auto closest_Jet(const RVec<float> &etaJ, const float &etalep, const RVec<float> &phiJ, const float &philep)
+{
+    float dR_min = 1000;
+    float dR;
+    
+    for(int i=0; i<etaJ.size(); i++){
+            dR = DeltaR(etaJ[i], etalep, phiJ[i], philep);
+            if (dR < dR_min){
+                dR_min = dR;
+            }
+    }   
+    return dR_min;
+};
+'''
+
+ROOT.gInterpreter.Declare(closest_Jet_code)
+
+##############################################################################################
+
+higherELepton_code = '''
+using namespace ROOT::VecOps;
+
+auto higherELepton(const RVec<float> &pt, const RVec<float> &eta, const RVec<float> &phi, bool min=0)
+{
+    RVec<float> eta_phi(2, 0);
+    float max_pt = 0.;
+    float min_pt = 1e4;
+    
+    if (!min){
+        for(int i=0; i<pt.size(); i++){
+                if (pt[i] > max_pt){
+                    max_pt = pt[i];
+                    eta_phi[0] = eta[i];
+                    eta_phi[1] = phi[i];
+                }
+        }
+    }
+    
+    else{
+        for(int i=0; i<pt.size(); i++){
+                if (pt[i] < min_pt){
+                    min_pt = pt[i];
+                    eta_phi[0] = eta[i];
+                    eta_phi[1] = phi[i];
+                }
+        }
+    }
+    return eta_phi;
+};
+'''
+
+ROOT.gInterpreter.Declare(higherELepton_code)
 
