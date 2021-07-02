@@ -37,7 +37,8 @@ def FSkim2(df):
             .Define('nGoodEl', 'Sum(maskEl)')\
             .Define('Electron_pt15', 'Electron_pt[maskEl]')\
             .Filter('nGoodMu == 1 && nGoodEl == 1', 'GoodEvent')\
-            .Define('maskJClean', 'cleanJ(Jet_eta, Merge(Muon_eta[maskMu], Electron_eta[maskEl]), Jet_phi,Merge(Muon_phi[maskMu], Electron_phi[maskEl]))')\
+            .Define('maskJClean', 'cleanJ(Jet_eta, Merge(Muon_eta[maskMu], Electron_eta[maskEl]),\
+                    Jet_phi,Merge(Muon_phi[maskMu], Electron_phi[maskEl]))')\
             .Define('maskBjet', 'Jet_btagDeepB > 0.7')\
             .Define('nJClean', 'Sum(maskJClean)')\
             .Define('maskBJClean', 'prod(maskJClean,maskBjet)')\
@@ -79,7 +80,8 @@ def FSkim4(df):
             .Filter('nGoodMu == 2 && nGoodEl == 1', 'GoodEvent')\
             .Define('ChargeMus', 'Muon_charge[maskMu][0] * Muon_charge[maskMu][1]')\
             .Filter('ChargeMus < 0', 'GoodCharge')\
-            .Define('maskJClean', 'cleanJ(Jet_eta, Merge(Muon_eta[maskMu], Electron_eta[maskEl]), Jet_phi,Merge(Muon_phi[maskMu], Electron_phi[maskEl]))')\
+            .Define('maskJClean', 'cleanJ(Jet_eta, Merge(Muon_eta[maskMu], Electron_eta[maskEl]),\
+            Jet_phi,Merge(Muon_phi[maskMu], Electron_phi[maskEl]))')\
             .Define('maskBjet', 'Jet_btagDeepB > 0.7')\
             .Define('nJClean', 'Sum(maskJClean)')\
             .Define('maskBJClean', 'prod(maskJClean,maskBjet)')\
@@ -228,9 +230,12 @@ def DeclareVariables4(df, title, save=True):
                         .Define('lep_q0', 'lep_charge[lep_idx[0]]')\
                         .Define('lep_q1', 'lep_charge[lep_idx[1]]')\
                         .Define('lep_q2', 'lep_charge[lep_idx[2]]')\
-                        .Define('inv_m01', 'InvMass2(lep_pt0, lep_pt1, lep_eta0, lep_eta1, lep_phi0, lep_phi1, lep_mass0, lep_mass1)')\
-                        .Define('inv_m12', 'InvMass2(lep_pt1, lep_pt2, lep_eta1, lep_eta2, lep_phi1, lep_phi2, lep_mass1, lep_mass2)')\
-                        .Define('inv_m02', 'InvMass2(lep_pt0, lep_pt2, lep_eta0, lep_eta2, lep_phi0, lep_phi2, lep_mass0, lep_mass2)')\
+                        .Define('inv_m01', 'InvMass2(lep_pt0, lep_pt1, lep_eta0, lep_eta1, lep_phi0, lep_phi1, lep_mass0,\
+                        lep_mass1)')\
+                        .Define('inv_m12', 'InvMass2(lep_pt1, lep_pt2, lep_eta1, lep_eta2, lep_phi1, lep_phi2, lep_mass1,\
+                        lep_mass2)')\
+                        .Define('inv_m02', 'InvMass2(lep_pt0, lep_pt2, lep_eta0, lep_eta2, lep_phi0, lep_phi2, lep_mass0,\
+                        lep_mass2)')\
                         .Define('inv_m3', 'InvMass3(lep_pt, lep_eta, lep_phi, lep_mass)')\
                         .Filter('abs(inv_m01 - 91.2) > 10 && abs(inv_m02 - 91.2) > 10 && abs(inv_m3 - 91.2) > 10', 'rmZ')\
                         .Define('dR01', 'dR(lep_eta0, lep_eta1, lep_phi0, lep_phi1)')\
