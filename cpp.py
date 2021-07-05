@@ -270,3 +270,39 @@ auto higherELepton(const RVec<float> &pt, const RVec<float> &eta, const RVec<flo
 
 ROOT.gInterpreter.Declare(higherELepton_code)
 
+##############################################################################################
+
+diJ_invm_code = '''
+using namespace ROOT::VecOps;
+
+RVec<float> diJ_invm(const RVec<float> &p, const RVec<float> &eta, const RVec<float> &phi, const RVec<float> &m)
+{
+    int dim = p.size()*(p.size()-1)/2;
+    RVec<int> inv_m(dim, 0);
+    int counter = 0;
+    
+    RVec<float> p_ = {0, 0};
+    RVec<float> eta_ = {0, 0};
+    RVec<float> phi_ = {0, 0};
+    RVec<float> mass_ = {0, 0};
+    
+    for(int i=0; i<(p.size()-1); i++){
+        for(int j=i+1; j<p.size(); j++){
+            p_[0] = p[i];
+            p_[1] = p[j];
+            eta_[0] = eta[i];
+            eta_[1] = eta[j];
+            phi_[0] = phi[i];
+            phi_[1] = phi[j];
+            mass_[0] = m[i];
+            mass_[1] = m[j];
+
+            inv_m[counter] = InvariantMass(p_, eta_, phi_, mass_);
+            counter++;
+        }
+    }
+    return inv_m;
+};
+'''
+
+ROOT.gInterpreter.Declare(diJ_invm_code)
