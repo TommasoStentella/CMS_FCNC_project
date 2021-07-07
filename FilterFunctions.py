@@ -38,8 +38,8 @@ SkimRanges = {
                  'dPhi1': (default_nbins, -4, 4),
                  'dPhi2': (default_nbins, -4, 4),
                  'dR01' : (default_nbins, 0, 4),
-                 'dR02' : (default_nbins, 0, 4),
-                 'di_Jet_invm': (default_nbins, 0, 200),}       
+                 'dR02' : (default_nbins, 0, 4),}
+                 #'di_Jet_invm': (default_nbins, 0, 200),}       
         }
 
 SkimLabels = { 
@@ -71,8 +71,8 @@ SkimLabels = {
                 'dPhi1': 'dPhi1',   
                 'dPhi2': 'dPhi2',
                 'dR01' : 'dR01',
-                'dR02' : 'dR02',
-                'di_Jet_invm': 'di_Jet_invm',}
+                'dR02' : 'dR02',}
+                #'di_Jet_invm': 'di_Jet_invm',}
         }
 
 # - iSkim1 ########################################################################
@@ -126,7 +126,7 @@ def FSkim3(df):
             .Filter('abs(Sum(Muon_charge[maskMu])) != 3', 'GoodCharge')\
             .Define('Muon_pt15', 'Muon_pt[maskMu]')\
             .Define('maskJClean', 'cleanJ(Jet_eta, Muon_eta[maskMu], Jet_phi, Muon_phi[maskMu])')\
-            .Define('maskBjet', 'Jet_btagDeepB > 0.1')\
+            .Define('maskBjet', 'Jet_btagDeepB > 0.6')\
             .Define('nJClean', 'Sum(maskJClean)')\
             .Define('maskBJClean', 'prod(maskJClean,maskBjet)')\
             .Define('nBJ', 'Sum(maskBJClean)')\
@@ -258,6 +258,9 @@ def DeclareVariables3(df, title, save=True):
                         .Define('inv_m12', 'InvMass2(mu_pt1, mu_pt2, mu_eta1, mu_eta2, mu_phi1, mu_phi2, mu_mass1, mu_mass2)')\
                         .Define('inv_m02', 'InvMass2(mu_pt0, mu_pt2, mu_eta0, mu_eta2, mu_phi0, mu_phi2, mu_mass0, mu_mass2)')\
                         .Define('inv_m3', 'InvMass3(Muon_pt[maskMu], Muon_eta[maskMu], Muon_phi[maskMu], Muon_mass[maskMu])')\
+                        .Filter('inv_m01 > 15')\
+                        .Filter('inv_m02 > 15')\
+                        .Filter('inv_m12 > 15')\
                         .Filter('abs(inv_m01 - 91.2) > 10 && abs(inv_m02 - 91.2) > 10', 'rmZ')\
                         .Define('dR01', 'dR(mu_eta0, mu_eta1, mu_phi0, mu_phi1)')\
                         .Define('dR02', 'dR(mu_eta0, mu_eta2, mu_phi0, mu_phi2)')\
@@ -277,6 +280,10 @@ def DeclareVariables3(df, title, save=True):
     if save: define.Snapshot('Events', dirOutPath + title + 'Flat3.root', finalVariables3)
     
     return define
+
+#.Filter('abs(inv_m02 - 91.2) > 10', 'other Z contamination with one lepton not reconstructed')\
+#.Define('WJ','abs(di_Jet_invm - 80) < 5')\
+#.Filter('Sum(WJ) < 1', 'cutting W')
 
 ##############################################################################################
 
@@ -324,7 +331,10 @@ def DeclareVariables4(df, title, save=True):
                         .Define('ST', 'lep_pt0 + lep_pt1  + lep_pt2 + Sum(Jet_pt[maskJClean]) + MET_pt')\
                         .Define('dPhi0', 'dPhi(MET_phi, lep_phi0)')\
                         .Define('dPhi1', 'dPhi(MET_phi, lep_phi1)')\
-                        .Define('dPhi2', 'dPhi(MET_phi, lep_phi2)')  
+                        .Define('dPhi2', 'dPhi(MET_phi, lep_phi2)')\
+                        .Define('notBJet','prod(maskJClean, (-1*maskBJClean)+1)')\
+                        .Define('di_Jet_invm', 'diJ_invm(Jet_pt[notBJet], Jet_eta[notBJet], Jet_phi[notBJet],\
+                                Jet_mass[notBJet])')
     
     if save: define.Snapshot('Events', dirOutPath + title + 'Flat4.root', finalVariables4)
     
