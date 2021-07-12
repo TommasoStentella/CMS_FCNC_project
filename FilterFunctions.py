@@ -226,6 +226,7 @@ def DeclareVariables2(df, title, save=True):
                         .Define('notBJet','prod(maskJClean, (-1*maskBJClean)+1)')\
                         .Define('di_Jet_invm', 'diJ_invm(Jet_pt[notBJet], Jet_eta[notBJet], Jet_phi[notBJet],\
                                 Jet_mass[notBJet])')
+                        #.Filter('mu_q * el_q > 0', 'ss')
                         
     if save: define.Snapshot('Events', dirOutPath + title + 'Flat2.root', finalVariables2)
     
@@ -257,7 +258,8 @@ def DeclareVariables3(df, title, save=True):
                         .Define('inv_m01', 'InvMass2(mu_pt0, mu_pt1, mu_eta0, mu_eta1, mu_phi0, mu_phi1, mu_mass0, mu_mass1)')\
                         .Define('inv_m12', 'InvMass2(mu_pt1, mu_pt2, mu_eta1, mu_eta2, mu_phi1, mu_phi2, mu_mass1, mu_mass2)')\
                         .Define('inv_m02', 'InvMass2(mu_pt0, mu_pt2, mu_eta0, mu_eta2, mu_phi0, mu_phi2, mu_mass0, mu_mass2)')\
-                        .Define('inv_m3', 'InvMass3(Muon_pt[maskMu], Muon_eta[maskMu], Muon_phi[maskMu], Muon_mass[maskMu])')\
+                        .Define('inv_m3', 'InvMass3(Muon_pt[maskMu], Muon_eta[maskMu], Muon_phi[maskMu], Merge(Merge(mu_mass0,\
+                                mu_mass1), mu_mass2)')\
                         .Filter('inv_m01 > 15')\
                         .Filter('inv_m02 > 15')\
                         .Filter('inv_m12 > 15')\
@@ -334,7 +336,8 @@ def DeclareVariables4(df, title, save=True):
                         .Define('dPhi2', 'dPhi(MET_phi, lep_phi2)')\
                         .Define('notBJet','prod(maskJClean, (-1*maskBJClean)+1)')\
                         .Define('di_Jet_invm', 'diJ_invm(Jet_pt[notBJet], Jet_eta[notBJet], Jet_phi[notBJet],\
-                                Jet_mass[notBJet])')
+                                Jet_mass[notBJet])')\
+                        .Filter('abs(lep_eta0) < 2.5 && abs(lep_eta1) < 2.5 && abs(lep_eta2) < 2.5', 'DYcut')
     
     if save: define.Snapshot('Events', dirOutPath + title + 'Flat4.root', finalVariables4)
     
