@@ -4,7 +4,7 @@ import cpp
 
 dirOutPath = '/data/Skim/'
 
-# - Dictionary for iSkim variables and labels #####################################
+### - Dictionary for iSkim variables and labels ###
 
 default_nbins = 30
 
@@ -91,89 +91,86 @@ SkimRanges = {
 
 SkimLabels = { 
     1 : 
-                {'Muon_pt15': 'Muon p_{T} 15 / GeV',
-                 'lep_pt0': 'Muon p^{T}_{0} / GeV',
-                 'lep_pt1': 'Muon p^{T}_{1} / GeV',
+                {'Muon_pt15': 'di-Muon p_{T} GeV',
+                 'lep_pt0': 'Muon p^{0}_{T} GeV',
+                 'lep_pt1': 'Muon p^{1}_{T} GeV',
                  'max_eta': '#eta_{max}',
-                 'lep_eta0': '#eta_{l_{0}}',
-                 'lep_eta1': '#eta_{l_{1}}',
-                 'inv_m': 'm_{inv} / GeV',
-                 'MET_pt': 'E_{miss} / GeV',
-                 'dRHJ': 'dRHJ',
-                 'dRLJ': 'dRLJ',
-                 'dRLep': 'dRLep',
-                 'ST': 'ST',
-                 'dPhi0': '#Delta#phi_{0}',
-                 'dPhi1': '#Delta#phi_{1}',},
+                 'lep_eta0': '#eta_{0}',
+                 'lep_eta1': '#eta_{1}',
+                 'inv_m': 'm^{inv} GeV',
+                 'MET_pt': 'MET p_{T} GeV',
+                 'dRHJ': '#Delta R_{hl/J}',
+                 'dRLJ': '#Delta R_{ll/J}',
+                 'dRLep': '#Delta R_{lep}',
+                 'ST': 'ST GeV',
+                 'dPhi0': '#Delta#phi_{MET/0}',
+                 'dPhi1': '#Delta#phi_{MET/1}',},
     2 : 
-                {'Muon_pt15': 'Muon p_{T} 15 / GeV',
-                 'lep_pt0': 'Muon p_{T} / GeV',
-                 'lep_pt1': 'Electron p_{T} / GeV',
+                {'Muon_pt15': 'Muon p_{T} GeV',
+                 'lep_pt0': 'Muon p_{T} GeV',
+                 'lep_pt1': 'Electron p_{T} GeV',
                  'max_eta': '#eta_{max}',
-                 'lep_eta0': '#eta_{l_{0}}',
-                 'lep_eta1': '#eta_{l_{1}}',
-                 'inv_m': 'm_{inv} / GeV',
-                 'MET_pt': 'E_{miss}',
-                 'dRHJ': 'dRHJ',
-                 'dRLJ': 'dRLJ',
-                 'dRLep': 'dRLep',
-                 'ST': 'ST',
-                 'dPhi0': '#Delta#phi_{0}',
-                 'dPhi1': '#Delta#phi_{1}',},
-    
+                 'lep_eta0': 'Muon #eta',
+                 'lep_eta1': 'Electron #eta',
+                 'inv_m': 'm^{inv} GeV',
+                 'MET_pt': 'MET p_{T} GeV',
+                 'dRHJ': '#Delta R_{hl/J}',
+                 'dRLJ': '#Delta R_{ll/J}',
+                 'dRLep': '#Delta R_{lep}',
+                 'ST': 'ST GeV',
+                 'dPhi0': '#Delta#phi_{MET/0}',
+                 'dPhi1': '#Delta#phi_{MET/1}',},  
     3 :
-                {'Muon_pt15': 'Muon p_{T} 15 / GeV',
-                'lep_pt0': 'Muon p^{T}_{0} / GeV',
-                'lep_pt1': 'Muon p^{T}_{1} / GeV',
-                'lep_pt2': 'Muon p^{T}_{2} / GeV',
-                'lep_eta0': '#eta_{l_{0}}',
-                'lep_eta1': '#eta_{l_{1}}',
-                'lep_eta2': '#eta_{l_{2}}',
-                'inv_m01': 'm_{inv} 01 / GeV',
-                'inv_m12': 'm_{inv} 12 / GeV',
-                'inv_m02': 'm_{inv} 02 / GeV',
-                'inv_m3': 'm_{inv} 3 / GeV',
-                'ST': 'ST',
-                'Jet_pt0': 'Jet p_{T}',
-                'Jet_pt1': 'Jet p_{T}',
-                'bJet_pt0': 'b-Jet p_{T}',
-                'MET_pt': 'Missing E / GeV',
-                'dPhi0': '#Delta#phi_{0}',   
-                'dPhi1': '#Delta#phi_{1}',   
-                'dPhi2': '#Delta#phi_{2}',
-                'dR01' : 'dR01',
-                'dR02' : 'dR02',
-                'dR1J' : 'dR1J',
-                'dR0bJ' : 'dR0bJ',},
+                {'Muon_pt15': 'tri-Muon p_{T} GeV',
+                'lep_pt0': 'Muon p^{0}_{T} GeV',
+                'lep_pt1': 'Muon p^{1}_{T} GeV',
+                'lep_pt2': 'Muon p^{2}_{T} GeV',
+                'lep_eta0': '#eta_{0}',
+                'lep_eta1': '#eta_{1}',
+                'lep_eta2': '#eta_{2}',
+                'inv_m01': 'm^{inv}_{0/1} GeV',
+                'inv_m12': 'm^{inv}_{1/2} GeV',
+                'inv_m02': 'm^{inv}_{0/2} GeV',
+                'inv_m3': 'm^{inv}_{3} GeV',
+                'ST': 'ST GeV',
+                'Jet_pt0': 'Jet p^{0}_{T} GeV',
+                'Jet_pt1': 'Jet p^{1}_{T} GeV',
+                'bJet_pt0': 'b-Jet p^{0}_{T} GeV',
+                'MET_pt': 'MET p_{T} GeV',
+                'dPhi0': '#Delta#phi_{MET/0}',
+                'dPhi1': '#Delta#phi_{MET/1}',  
+                'dPhi2': '#Delta#phi_{MET/2}',
+                'dR01' : '#Delta R_{0/1}',
+                'dR02' : '#Delta R_{0/2}',
+                'dR1J' : '#Delta R_{1/J}',
+                'dR0bJ' : '#Delta R_{0/bJ}',},
     4 :
-                {'Muon_pt15': 'Muon p_{T} 15 / GeV',
-                'lep_pt0': 'Lepton p_{T} / GeV',
-                'lep_pt1': 'Lepton p_{T} / GeV',
-                'lep_pt2': 'Lepton p_{T} / GeV',
-                'lep_eta0': '#eta_{l_{0}}',
-                'lep_eta1': '#eta_{l_{1}}',
-                'lep_eta2': '#eta_{l_{2}}',
-                'inv_m01': 'm_{inv} 01 / GeV',
-                'inv_m12': 'm_{inv} 12 / GeV',
-                'inv_m02': 'm_{inv} 02 / GeV',
-                'inv_m3': 'm_{inv} 3 / GeV',
-                'ST': 'ST',
-                'Jet_pt0': 'Jet p_{T}',
-                'Jet_pt1': 'Jet p_{T}',
-                'bJet_pt0': 'b-Jet p_{T}',
-                'MET_pt': 'E_{miss} / GeV',
-                'dPhi0': '#Delta#phi_{0}',   
-                'dPhi1': '#Delta#phi_{1}',   
-                'dPhi2': '#Delta#phi_{2}',
-                'dR01' : 'dR01',
-                'dR02' : 'dR02',
-                'dR1J' : 'dR1J',
-                'dR0bJ' : 'dR0bJ',}
+                {'Muon_pt15': 'di-Muon p_{T} GeV',
+                'lep_pt0': 'Lepton p^{0}_{T} GeV',
+                'lep_pt1': 'Lepton p^{1}_{T} GeV',
+                'lep_pt2': 'Lepton p^{2}_{T} GeV',
+                'lep_eta0': '#eta_{0}',
+                'lep_eta1': '#eta_{1}',
+                'lep_eta2': '#eta_{2}',
+                'inv_m01': 'm^{inv}_{0/1} GeV',
+                'inv_m12': 'm^{inv}_{1/2} GeV',
+                'inv_m02': 'm^{inv}_{0/2} GeV',
+                'inv_m3': 'm^{inv}_{3} GeV',
+                'ST': 'ST GeV',
+                'Jet_pt0': 'Jet p^{0}_{T} GeV',
+                'Jet_pt1': 'Jet p^{1}_{T} GeV',
+                'bJet_pt0': 'b-Jet p^{0}_{T} GeV',
+                'MET_pt': 'MET p_{T} GeV',
+                'dPhi0': '#Delta#phi_{MET/0}',
+                'dPhi1': '#Delta#phi_{MET/1}',  
+                'dPhi2': '#Delta#phi_{MET/2}',
+                'dR01' : '#Delta R_{0/1}',
+                'dR02' : '#Delta R_{0/2}',
+                'dR1J' : '#Delta R_{1/J}',
+                'dR0bJ' : '#Delta R_{0/bJ}',}
         }
 
-                #'di_Jet_invm': 'di_Jet_invm',}
-
-# - iSkim1 ########################################################################
+### - iSkim1 ###
 def FSkim1(df):
     fdf = df.Filter('iSkim == 1', 'iSkim1')\
             .Define('maskMu', 'Muon_pfRelIso03_all < 0.15 && Muon_pt > 15 && abs(Muon_eta)<2.5')\
@@ -188,12 +185,11 @@ def FSkim1(df):
             .Define('nJClean', 'Sum(maskJClean)')\
             .Define('maskBJClean', 'prod(maskJClean,maskBjet)')\
             .Define('nBJ', 'Sum(maskBJClean)')\
-            .Filter('nJClean >= 4 && nBJ > 0 && nBJ < 2', 'GoodJet') 
+            .Filter('nJClean >= 4 && nBJ > 0 && nBJ <= 2', 'GoodJet') 
             
     return fdf
-# .Filter('nCleanJet >= 4 && nBJet > 0 && nBJet <= 2', 'GoodJet')
 
-# - iSkim2 ########################################################################
+### - iSkim2 ###
 def FSkim2(df):
     fdf = df.Filter('iSkim == 2', 'iSkim2')\
             .Define('maskMu', 'Muon_pfRelIso03_all < 0.1 && Muon_pt > 27 && abs(Muon_eta)<2.4')\
@@ -214,9 +210,8 @@ def FSkim2(df):
             .Filter('nJClean >= 4 && nBJ > 0 && nBJ <= 2', 'GoodJet')
             
     return fdf
-#.Filter('nCleanJet >= 4 && nBJet > 0 && nBJet <= 2', 'GoodJet')\
 
-# - iSkim3 ########################################################################
+### - iSkim3 ###
 def FSkim3(df):
     fdf = df.Filter('iSkim == 3', 'iSkim3')\
             .Define('maskMu', 'Muon_pfRelIso03_all < 0.15 && Muon_pt > 15 && abs(Muon_eta)<2.5')\
@@ -235,9 +230,8 @@ def FSkim3(df):
             .Filter('nJClean >= 2 && nBJ >= 1', 'GoodJet')
     
     return fdf
-#.Filter('nCleanJet >= 2 && nBJet >= 1', 'GoodJet')\
 
-# - iSkim4 ########################################################################
+### - iSkim4 ###
 def FSkim4(df):
     fdf = df.Filter('iSkim == 4', 'iSkim4')\
             .Define('maskMu', 'Muon_pfRelIso03_all < 0.15 && Muon_pt > 15 && abs(Muon_eta)<2.5')\
@@ -259,17 +253,14 @@ def FSkim4(df):
             .Filter('nJClean >= 2 && nBJ >= 1', 'GoodJet')
             
     return fdf
-#.Filter('nCleanJet >= 2 && nBJet >= 1', 'GoodJet')\
 
-# - iSkim dictionary ##############################################################
+### - iSkim dictionary ###
 
 FSkim ={1 : FSkim1, 2 : FSkim2, 3 : FSkim3, 4 : FSkim4}
 
-# - Declare Variables ####################################################################
-
+### - Declare Variables 1 ###
 def DeclareVariables1(df, title, save=True):
-    finalVariables1 = {'lep_mass0','lep_mass1','max_eta','lep_eta1',
-                       'inv_m','dRHJ','dRLJ','dRLep','dPhi0','dPhi1','eventWeightLumi'}
+    finalVariables1 = {'max_eta','lep_eta1','inv_m','dRHJ','dRLJ','dRLep','dPhi0','dPhi1','eventWeightLumi'}
     
     define =  FSkim1(df).Define('lep_pt0', 'Muon_pt[maskMu][0]')\
                         .Define('lep_pt1', 'Muon_pt[maskMu][1]')\
@@ -282,7 +273,8 @@ def DeclareVariables1(df, title, save=True):
                         .Define('lep_mass1', '0.1057')\
                         .Define('lep_q0', 'Muon_charge[maskMu][0]')\
                         .Define('lep_q1', 'Muon_charge[maskMu][1]')\
-                        .Define('inv_m', 'InvMass2(lep_pt0, lep_pt1, lep_eta0, lep_eta1, lep_phi0, lep_phi1, lep_mass0, lep_mass1)')\
+                        .Define('inv_m', 'InvMass2(lep_pt0, lep_pt1, lep_eta0, lep_eta1, lep_phi0, lep_phi1, lep_mass0,\
+                                lep_mass1)')\
                         .Filter('inv_m > 15', 'GoodMass')\
                         .Filter('!(abs(inv_m - 91.2) < 10 && lep_q0 * lep_q1 < 0)', 'rmZ')\
                         .Define('dRHJ', 'closest_Jet(Jet_eta[maskJClean],lep_eta0,Jet_phi[maskJClean],lep_phi0)')\
@@ -300,11 +292,9 @@ def DeclareVariables1(df, title, save=True):
     
     return define
 
-##############################################################################################
-
+### - Declare Variables 2 ###
 def DeclareVariables2(df, title, save=True):
-    finalVariables2 = {'lep_mass0','lep_mass1','max_eta','lep_eta1',
-                       'inv_m','dRHJ','dRLJ','dRLep','dPhi0','dPhi1','eventWeightLumi'}
+    finalVariables2 = {'max_eta','lep_eta1','inv_m','dRHJ','dRLJ','dRLep','dPhi0','dPhi1','eventWeightLumi'}
 
     define =  FSkim2(df).Define('lep_pt0', 'Muon_pt[maskMu][0]')\
                         .Define('lep_pt1', 'Electron_pt[maskEl][0]')\
@@ -339,11 +329,10 @@ def DeclareVariables2(df, title, save=True):
     
     return define
 
-##############################################################################################
-
+### - Declare Variables 3 ###
 def DeclareVariables3(df, title, save=True):
-    finalVariables3 = {'lep_pt0','lep_mass0','lep_mass1','lep_mass2','inv_m01','lep_eta1','lep_eta2',
-                       'inv_m12','inv_m02','dR1J','dR0bJ','dR01','dR02','dPhi0','dPhi1','dPhi2','eventWeightLumi'}
+    finalVariables3 = {'inv_m01','lep_eta1','lep_eta2','inv_m12','inv_m02','dR1J',
+                       'dR0bJ','dR01','dR02','dPhi0','dPhi1','dPhi2','eventWeightLumi'}
 
     define =  FSkim3(df).Define('lep_idx', 'find_idx(Muon_charge[maskMu], Muon_phi[maskMu], Muon_eta[maskMu])')\
                         .Define('lep_pt0', 'Muon_pt[maskMu][lep_idx[0]]')\
@@ -392,15 +381,10 @@ def DeclareVariables3(df, title, save=True):
     
     return define
 
-#.Filter('abs(inv_m02 - 91.2) > 10', 'other Z contamination with one lepton not reconstructed')\
-#.Define('WJ','abs(di_Jet_invm - 80) < 5')\
-#.Filter('Sum(WJ) < 1', 'cutting W')
-
-##############################################################################################
-
+### - Declare Variables 4 ###
 def DeclareVariables4(df, title, save=True):    
-    finalVariables4 = {'lep_pt0','lep_mass0','lep_mass1','lep_mass2','inv_m01','lep_eta1','lep_eta2',
-                       'inv_m12','inv_m02','dR1J','dR0bJ','dR01','dR02','dPhi0','dPhi1','dPhi2','eventWeightLumi'}
+    finalVariables4 = {'inv_m01','lep_eta1','lep_eta2','inv_m12','inv_m02','dR1J',
+                       'dR0bJ','dR01','dR02','dPhi0','dPhi1','dPhi2','eventWeightLumi'}
 
     define =  FSkim4(df).Define('lep_pt', 'Merge(Muon_pt[maskMu], Electron_pt[maskEl])')\
                         .Define('lep_eta', 'Merge(Muon_eta[maskMu], Electron_eta[maskEl])')\
@@ -454,6 +438,6 @@ def DeclareVariables4(df, title, save=True):
     
     return define
 
-##############################################################################################
+### - Declare variables dictionary ###
 
 DeclareVariables = {1 : DeclareVariables1, 2 : DeclareVariables2, 3 : DeclareVariables3, 4 : DeclareVariables4}
