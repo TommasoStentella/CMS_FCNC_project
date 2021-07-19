@@ -134,19 +134,6 @@ ROOT.gInterpreter.Declare(dPhi_code)
 
 ##############################################################################################
 
-# Zcandidate_code = '''
-# using namespace ROOT::VecOps;
-
-# auto Zcandidate(const float &inv_m01, const float &inv_m02)
-# {
-#     return InvariantMass(p, eta, phi, m);
-# };
-# '''
-
-# ROOT.gInterpreter.Declare(Zcandidate_code)
-
-##############################################################################################
-
 merge_code = '''
 using namespace ROOT::VecOps;
 
@@ -306,5 +293,3 @@ RVec<float> diJ_invm(const RVec<float> &p, const RVec<float> &eta, const RVec<fl
 '''
 
 ROOT.gInterpreter.Declare(diJ_invm_code)
-
-
